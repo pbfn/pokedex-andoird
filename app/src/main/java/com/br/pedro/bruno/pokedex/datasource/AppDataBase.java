@@ -125,6 +125,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                 pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
                 pokemon.setName(cursor.getString(cursor.getColumnIndex(PokemonDataModel.NAMEPOKEMON)));
                 pokemon.setUrlImage(cursor.getString(cursor.getColumnIndex(PokemonDataModel.URLIMAGEPOKEMON)));
+                pokemon.setBackgroundColor(cursor.getString(cursor.getColumnIndex(PokemonDataModel.BACKGROUNDCOLOR)));
 
                 //types do pokemon
                 typesPoke = (ArrayList<TypePokemon>) getTypePokemonById("tbTypePokemon",pokemon.getId());
@@ -167,6 +168,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                 pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
                 pokemon.setName(cursor.getString(cursor.getColumnIndex(PokemonDataModel.NAMEPOKEMON)));
                 pokemon.setUrlImage(cursor.getString(cursor.getColumnIndex(PokemonDataModel.URLIMAGEPOKEMON)));
+                pokemon.setBackgroundColor(cursor.getString(cursor.getColumnIndex(PokemonDataModel.BACKGROUNDCOLOR)));
             }while (cursor.moveToNext());
         }
 

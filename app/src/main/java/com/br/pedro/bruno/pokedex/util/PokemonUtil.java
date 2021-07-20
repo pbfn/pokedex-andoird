@@ -1,6 +1,7 @@
 package com.br.pedro.bruno.pokedex.util;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import com.br.pedro.bruno.pokedex.controller.PokemonController;
 import com.br.pedro.bruno.pokedex.controller.StatController;
@@ -65,6 +66,7 @@ public class PokemonUtil {
                 JSONObject type = arrayTypes.getJSONObject(i);
                 JSONObject typeJSONObject = type.getJSONObject("type");
                 String typeString = typeJSONObject.getString("name");
+
                 Type typePoke =  typeController.getByName(typeString);
                 typeArrayList.add(typePoke);
                 typePokemon.setIdType(typePoke.getIdType());
@@ -72,7 +74,7 @@ public class PokemonUtil {
                 typePokemonController.incluir(typePokemon);
             }
             pokemon.setTypes(typeArrayList);
-
+            pokemon.setBackgroundColor(selectBackgroundColor(typeArrayList.get(0).getNameType()));
 
             JSONArray arrayStats = jsonPokemon.getJSONArray("stats");
             ArrayList<Stat> statArrayList = new ArrayList<>();
@@ -103,4 +105,49 @@ public class PokemonUtil {
         return pokemon;
     }
 
+    private String selectBackgroundColor(String nameType){
+        switch (nameType){
+            case "normal":
+               return "#FB6C6C";
+            case "fighting":
+                return "#ff5500";
+            case "flying":
+                return "#FB6C6C";
+            case "poison":
+                return "#CC00ff";
+            case "ground":
+                return "#802b00";
+            case "rock":
+                return "#";
+            case "bug":
+                return "#cc9900";
+            case "ghost":
+                return "#";
+            case "steel":
+                return "#FB6C6C";
+            case "fire":
+                return "#FB6C6C";
+            case "water":
+                return "#1AA3FF";
+            case "grass":
+                return "#48D0B0";
+            case "electric":
+                return "#ffff66";
+            case "psychic":
+                return "#FB6C6C";
+            case "ice":
+                return "#99ccff";
+            case "dragon":
+                return "#FB6C6C";
+            case "dark":
+                return "#FB6C6C";
+            case "fairy":
+                return "#FB6C6C";
+            case "unknown":
+                return "#FB6C6C";
+            case "shadow":
+                return "#FB6C6C";
+        }
+        return "#FFFFFF";
+    }
 }

@@ -1,14 +1,16 @@
 package com.br.pedro.bruno.pokedex.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pokemon {
+public class Pokemon implements Serializable {
 
     private int idPokemon;
     private String namePokemon;
     private String urlImagePokemon;
     private ArrayList<Stat> stats;
     private ArrayList<Type> types;
+    private String backgroundColor;
 
     public int getId() {
         return idPokemon;
@@ -48,5 +50,13 @@ public class Pokemon {
 
     public void setStats(ArrayList<Stat> stats) {
         this.stats = stats;
+    }
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroudColor) {
+        this.backgroundColor = backgroudColor;
     }
 }
