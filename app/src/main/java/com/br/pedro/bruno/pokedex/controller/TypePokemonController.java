@@ -27,6 +27,7 @@ public class TypePokemonController extends AppDataBase implements ICrud<TypePoke
 
         dadoDoObjeto.put(TypePokemonDataModel.IDPOKEMON,obj.getIdPokemon());
         dadoDoObjeto.put(TypePokemonDataModel.IDTYPE,obj.getIdType());
+        dadoDoObjeto.put(TypePokemonDataModel.ORDER,obj.getOrder());
         //Enviar dados para a classe AppDataBase
 
         return insert(TypePokemonDataModel.TABELA,dadoDoObjeto);

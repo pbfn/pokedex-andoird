@@ -110,6 +110,8 @@ public class AppDataBase extends SQLiteOpenHelper {
         Pokemon pokemon;
 
         List<Pokemon> pokemons = new ArrayList<>();
+        ArrayList<TypePokemon> typesPoke;
+        ArrayList<StatPokemon> statsPoke;
         String sql = "SELECT * FROM "+tabela;
         Cursor cursor;
 
@@ -123,6 +125,27 @@ public class AppDataBase extends SQLiteOpenHelper {
                 pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
                 pokemon.setName(cursor.getString(cursor.getColumnIndex(PokemonDataModel.NAMEPOKEMON)));
                 pokemon.setUrlImage(cursor.getString(cursor.getColumnIndex(PokemonDataModel.URLIMAGEPOKEMON)));
+
+                //types do pokemon
+                typesPoke = (ArrayList<TypePokemon>) getTypePokemonById("tbTypePokemon",pokemon.getId());
+                ArrayList<Type> types = new ArrayList<>();
+                Type type;
+                for (int i = 0; i < typesPoke.size(); i++) {
+                    type = getTypeById(typesPoke.get(i).getIdType());
+                    types.add(type);
+                }
+                pokemon.setTypes(types);
+
+                //stats do pokemon
+                statsPoke = (ArrayList<StatPokemon>) getStatsPokemonById("tbStatPokemon",pokemon.getId());
+                ArrayList<Stat> stats = new ArrayList<>();
+                Stat stat;
+                for (int i = 0; i <statsPoke.size() ; i++) {
+                    stat = getStatById(statsPoke.get(i).getIdStat());
+                    stats.add(stat);
+                }
+                pokemon.setStats(stats);
+
                 pokemons.add(pokemon);
 
             }while (cursor.moveToNext());
@@ -167,6 +190,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                 typePokemon = new TypePokemon();
                 typePokemon.setIdPokemon(cursor.getInt(cursor.getColumnIndex(TypePokemonDataModel.IDPOKEMON)));
                 typePokemon.setIdType(cursor.getInt(cursor.getColumnIndex(TypePokemonDataModel.IDTYPE)));
+                typePokemon.setOrder(cursor.getInt(cursor.getColumnIndex(TypePokemonDataModel.ORDER)));
                 typePokemons.add(typePokemon);
 
             }while (cursor.moveToNext());
@@ -180,7 +204,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         TypePokemon typePokemon;
 
         List<TypePokemon> typePokemons = new ArrayList<>();
-        String sql = "SELECT * FROM "+tabela+ " WHERE idpokemon = "+idPokemon;
+        String sql = "SELECT * FROM "+tabela+ " WHERE idpokemon = "+idPokemon+" order by ordem";
         Cursor cursor;
 
         cursor = db.rawQuery(sql,null);
@@ -191,6 +215,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                 typePokemon = new TypePokemon();
                 typePokemon.setIdPokemon(cursor.getInt(cursor.getColumnIndex(TypePokemonDataModel.IDPOKEMON)));
                 typePokemon.setIdType(cursor.getInt(cursor.getColumnIndex(TypePokemonDataModel.IDTYPE)));
+                typePokemon.setOrder(cursor.getInt(cursor.getColumnIndex(TypePokemonDataModel.ORDER)));
                 typePokemons.add(typePokemon);
 
             }while (cursor.moveToNext());
@@ -296,6 +321,25 @@ public class AppDataBase extends SQLiteOpenHelper {
         return type;
     }
 
+    public Type getTypeById(int id){
+
+        db = getWritableDatabase();
+        Type type =  new Type();;
+        String sql = "SELECT * FROM tbType WHERE idType="+id+"";
+        Cursor cursor;
+        cursor = db.rawQuery(sql,null);
+
+        if(cursor.moveToFirst()){
+            do {
+                type.setIdType(cursor.getInt(cursor.getColumnIndex(TypeDataModel.IDTYPE)));
+                type.setNameType(cursor.getString(cursor.getColumnIndex(TypeDataModel.NAMETYPE)));
+                type.setUrlType(cursor.getString(cursor.getColumnIndex(TypeDataModel.URLTYPE)));
+            }while (cursor.moveToNext());
+        }
+
+        return type;
+    }
+
     //STAT
     public List<Stat> getAllStats(String tabela){
         db = getWritableDatabase();
@@ -342,8 +386,22 @@ public class AppDataBase extends SQLiteOpenHelper {
         return stat;
     }
 
+    public Stat getStatById(int id){
 
+        db = getWritableDatabase();
+        Stat stat =  new Stat();;
+        String sql = "SELECT * FROM tbStat WHERE idStat="+id+"";
+        Cursor cursor;
+        cursor = db.rawQuery(sql,null);
 
+        if(cursor.moveToFirst()){
+            do {
+                stat.setIdStat(cursor.getInt(cursor.getColumnIndex(StatDataModel.IDSTAT)));
+                stat.setNameStat(cursor.getString(cursor.getColumnIndex(StatDataModel.NAMESTAT)));
+                stat.setUrlStat(cursor.getString(cursor.getColumnIndex(StatDataModel.URLSTAT)));
+            }while (cursor.moveToNext());
+        }
 
-
+        return stat;
+    }
 }

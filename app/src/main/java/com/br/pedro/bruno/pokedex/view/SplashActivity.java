@@ -60,23 +60,25 @@ public class SplashActivity extends AppCompatActivity {
             List<Pokemon> pokemonList =  pokemonController.listar();
 
 
-            txtSubtitle.setText("Buscando os Tipos");
+            //txtSubtitle.setText("Buscando os Pokemons");
             if(typeList.size()==0){
                 TypeUtil typeUtil = new TypeUtil();
                 typeUtil.getType("https://pokeapi.co/api/v2/type/",getApplicationContext());
             }
 
 
-            txtSubtitle.setText("Buscando os Status");
+           // txtSubtitle.setText("Buscando os Status");
             if(statList.size()==0){
                 StatUtil statUtil = new StatUtil();
                 statUtil.getStat("https://pokeapi.co/api/v2/stat/",getApplicationContext());
             }
 
-            txtSubtitle.setText("Buscando os Pokemons");
+//            txtSubtitle.setText("Buscando os Pokemons");
             if(pokemonList.size()==0){
                 PokemonUtil pokemonUtil = new PokemonUtil();
-                pokemonUtil.getPokemon("https://pokeapi.co/api/v2/pokemon/1",getApplicationContext());
+                for (int i = 1; i < 15; i++) {
+                    pokemonUtil.getPokemon("https://pokeapi.co/api/v2/pokemon/"+i,getApplicationContext());
+                }
             }
             return true;
         }

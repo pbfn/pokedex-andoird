@@ -45,9 +45,6 @@ public class PokemonUtil {
 
     public Pokemon parsePokmeonJson(String json){
 
-        String types;
-
-        //TODO buscar no banco os types e o stats para comparar aqui;
         try {
 
             JSONObject jsonPokemon = new JSONObject(json);
@@ -71,6 +68,7 @@ public class PokemonUtil {
                 Type typePoke =  typeController.getByName(typeString);
                 typeArrayList.add(typePoke);
                 typePokemon.setIdType(typePoke.getIdType());
+                typePokemon.setOrder(i+1);
                 typePokemonController.incluir(typePokemon);
             }
             pokemon.setTypes(typeArrayList);
