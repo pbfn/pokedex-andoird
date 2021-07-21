@@ -40,7 +40,10 @@ public class StatUtil {
                 Stat stat = new Stat();
 
                 stat.setIdStat(i+1);
-                stat.setNameStat(jsonObject.getString("name"));
+                String name = jsonObject.getString("name");
+                //Primeira letra maiúscula
+                name = name.substring(0,1).toUpperCase().concat(name.substring(1));
+                stat.setNameStat(name);
                 stat.setUrlStat(jsonObject.getString("url"));
                 stats.add(stat);
                  statController.incluir(stat);

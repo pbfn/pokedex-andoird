@@ -40,7 +40,10 @@ public class TypeUtil {
                 Type type = new Type();
 
                 type.setIdType(i+1);
-                type.setNameType(jsonObject.getString("name"));
+                String name = jsonObject.getString("name");
+                //Primeira letra maiúscula
+                name = name.substring(0,1).toUpperCase().concat(name.substring(1));
+                type.setNameType(name);
                 type.setUrlType(jsonObject.getString("url"));
                 types.add(type);
                 typeController.incluir(type);

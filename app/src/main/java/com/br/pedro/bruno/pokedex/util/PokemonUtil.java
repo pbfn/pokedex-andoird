@@ -52,7 +52,10 @@ public class PokemonUtil {
 
             int id = jsonPokemon.getInt("id");
             pokemon.setId(id);
-            pokemon.setName(jsonPokemon.getString("name"));
+            String name = jsonPokemon.getString("name");
+            //Primeira letra maiúscula
+            name = name.substring(0,1).toUpperCase().concat(name.substring(1));
+            pokemon.setName(name);
 
 
             JSONArray arrayTypes = jsonPokemon.getJSONArray("types");
@@ -66,7 +69,7 @@ public class PokemonUtil {
                 JSONObject type = arrayTypes.getJSONObject(i);
                 JSONObject typeJSONObject = type.getJSONObject("type");
                 String typeString = typeJSONObject.getString("name");
-
+                typeString = typeString.substring(0,1).toUpperCase().concat(typeString.substring(1));
                 Type typePoke =  typeController.getByName(typeString);
                 typeArrayList.add(typePoke);
                 typePokemon.setIdType(typePoke.getIdType());
@@ -88,6 +91,7 @@ public class PokemonUtil {
                 statPokemon.setBaseStat(statsJSONObject.getInt("base_stat"));
                 JSONObject statJsonObject = statsJSONObject.getJSONObject("stat");
                 String statString = statJsonObject.getString("name");
+                statString = statString.substring(0,1).toUpperCase().concat(statString.substring(1));
                 Stat statPoke = statController.getByName(statString);
                 statArrayList.add(statPoke);
                 statPokemon.setIdStat(statPoke.getIdStat());
@@ -107,45 +111,45 @@ public class PokemonUtil {
 
     private String selectBackgroundColor(String nameType){
         switch (nameType){
-            case "normal":
+            case "Normal":
                return "#FB6C6C";
-            case "fighting":
+            case "Fighting":
                 return "#ff5500";
-            case "flying":
+            case "Flying":
                 return "#FB6C6C";
-            case "poison":
+            case "Poison":
                 return "#CC00ff";
-            case "ground":
+            case "Ground":
                 return "#802b00";
-            case "rock":
+            case "Rock":
                 return "#";
-            case "bug":
+            case "Bug":
                 return "#cc9900";
-            case "ghost":
+            case "Ghost":
                 return "#";
-            case "steel":
+            case "Steel":
                 return "#FB6C6C";
-            case "fire":
+            case "Fire":
                 return "#FB6C6C";
-            case "water":
+            case "Water":
                 return "#1AA3FF";
-            case "grass":
+            case "Grass":
                 return "#48D0B0";
-            case "electric":
+            case "Electric":
                 return "#ffff66";
-            case "psychic":
+            case "Psychic":
                 return "#FB6C6C";
-            case "ice":
+            case "Ice":
                 return "#99ccff";
-            case "dragon":
+            case "Dragon":
                 return "#FB6C6C";
-            case "dark":
+            case "Dark":
                 return "#FB6C6C";
-            case "fairy":
+            case "Fairy":
                 return "#FB6C6C";
-            case "unknown":
+            case "Unknown":
                 return "#FB6C6C";
-            case "shadow":
+            case "Shadow":
                 return "#FB6C6C";
         }
         return "#FFFFFF";

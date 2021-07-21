@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
                         Intent intent = new Intent(getApplicationContext(),DadosPokemon.class);
-                        Pokemon pokemon = pokemonController.getById(position+1);
-                        intent.putExtra("pokemonSelecionado",pokemon);
+
+                        intent.putExtra("pokemonSelecionado",position+1);
                         startActivity(intent);
                     }
 

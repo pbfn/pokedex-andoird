@@ -162,7 +162,8 @@ public class AppDataBase extends SQLiteOpenHelper {
         String sql = "SELECT * FROM "+tabela+" WHERE idPokemon="+id;
         Cursor cursor;
         cursor = db.rawQuery(sql,null);
-
+        ArrayList<TypePokemon> typesPoke;
+        ArrayList<StatPokemon> statsPoke;
         if(cursor.moveToFirst()){
             do {
                 pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
@@ -171,6 +172,25 @@ public class AppDataBase extends SQLiteOpenHelper {
                 pokemon.setBackgroundColor(cursor.getString(cursor.getColumnIndex(PokemonDataModel.BACKGROUNDCOLOR)));
             }while (cursor.moveToNext());
         }
+
+        typesPoke = (ArrayList<TypePokemon>) getTypePokemonById("tbTypePokemon",pokemon.getId());
+        ArrayList<Type> types = new ArrayList<>();
+        Type type;
+        for (int i = 0; i < typesPoke.size(); i++) {
+            type = getTypeById(typesPoke.get(i).getIdType());
+            types.add(type);
+        }
+        pokemon.setTypes(types);
+
+        //stats do pokemon
+        statsPoke = (ArrayList<StatPokemon>) getStatsPokemonById("tbStatPokemon",pokemon.getId());
+        ArrayList<Stat> stats = new ArrayList<>();
+        Stat stat;
+        for (int i = 0; i <statsPoke.size() ; i++) {
+            stat = getStatById(statsPoke.get(i).getIdStat());
+            stats.add(stat);
+        }
+        pokemon.setStats(stats);
 
         return pokemon;
     }
