@@ -1,6 +1,8 @@
 package com.br.pedro.bruno.pokedex.model;
 
-public class Type {
+import java.io.Serializable;
+
+public class Type implements Serializable {
 
     private int idType;
     private String nameType;

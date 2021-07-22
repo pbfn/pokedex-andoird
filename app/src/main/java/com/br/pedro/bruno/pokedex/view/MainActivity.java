@@ -58,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 new RecyclerClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getApplicationContext(),DadosPokemon.class);
+                        Pokemon pokemon = pokemonController.getById(position+1);
 
-                        intent.putExtra("pokemonSelecionado",position+1);
+                        Intent intent = new Intent(getApplicationContext(),DadosPokemon.class);
+                        intent.putExtra("pokemonSelecionado",pokemon);
                         startActivity(intent);
                     }
 

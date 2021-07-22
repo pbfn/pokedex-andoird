@@ -1,6 +1,8 @@
 package com.br.pedro.bruno.pokedex.model;
 
-public class Stat {
+import java.io.Serializable;
+
+public class Stat implements Serializable {
 
     private int idStat;
     private String nameStat;
