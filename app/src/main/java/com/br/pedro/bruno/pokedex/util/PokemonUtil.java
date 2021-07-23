@@ -122,11 +122,11 @@ public class PokemonUtil {
             case "Ground":
                 return "#802b00";
             case "Rock":
-                return "#";
+                return "#802b00";
             case "Bug":
                 return "#cc9900";
             case "Ghost":
-                return "#";
+                return "#cc9900";
             case "Steel":
                 return "#FB6C6C";
             case "Fire":

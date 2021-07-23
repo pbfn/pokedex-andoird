@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.br.pedro.bruno.pokedex.R;
@@ -28,6 +30,8 @@ public class SplashActivity extends AppCompatActivity {
     TypeController typeController;
     PokemonController pokemonController;
     StatController statController;
+    ProgressBar progressBarSplash;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,8 @@ public class SplashActivity extends AppCompatActivity {
         typeController = new TypeController(getApplicationContext());
         pokemonController = new PokemonController(getApplicationContext());
         statController = new StatController(getApplicationContext());
+        progressBarSplash = findViewById(R.id.progressBarSplash);
+
         new RequestApis().execute();
 
     }
@@ -45,13 +51,23 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                exibirProgess(false);
                 startActivity(intent);
                 finish();
             }
-        },2000);
+        },1000);
     }
 
+    private void exibirProgess(boolean exibir){
+        progressBarSplash.setVisibility(exibir? View.VISIBLE: View.GONE);
+    }
     public class RequestApis extends AsyncTask<Void,Void,Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            exibirProgess(true);
+        }
 
         @Override
         protected Boolean doInBackground(Void... voids) {
@@ -59,8 +75,6 @@ public class SplashActivity extends AppCompatActivity {
             List<Stat> statList =  statController.listar();
             List<Pokemon> pokemonList =  pokemonController.listar();
 
-
-            //txtSubtitle.setText("Buscando os Pokemons");
             if(typeList.size()==0){
                 TypeUtil typeUtil = new TypeUtil();
                 typeUtil.getType("https://pokeapi.co/api/v2/type/",getApplicationContext());
@@ -76,7 +90,7 @@ public class SplashActivity extends AppCompatActivity {
 //            txtSubtitle.setText("Buscando os Pokemons");
             if(pokemonList.size()==0){
                 PokemonUtil pokemonUtil = new PokemonUtil();
-                for (int i = 1; i < 15; i++) {
+                for (int i = 1; i < 110; i++) {
                     pokemonUtil.getPokemon("https://pokeapi.co/api/v2/pokemon/"+i,getApplicationContext());
                 }
             }

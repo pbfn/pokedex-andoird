@@ -3,6 +3,7 @@ package com.br.pedro.bruno.pokedex.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,27 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
     @Override
     public void onBindViewHolder(AdapterPokemon.MyViewHolder holder, int position) {
           Pokemon pokemon = listaPokemons.get(position);
-          holder.txtIdPokemon.setText(Integer.toString(pokemon.getId()));
+          String codigo = Integer.toString(pokemon.getId());
+          switch (codigo.length()) {
+              case 1:
+                  holder.txtIdPokemon.setText("#00"+codigo);
+                  break;
+              case 2:
+                  holder.txtIdPokemon.setText("#0"+codigo);
+                  break;
+              case 3:
+                  holder.txtIdPokemon.setText("#"+codigo);
+                  break;
+          }
           holder.txtNamePokemon.setText(pokemon.getName());
           holder.cardPokemon.setCardBackgroundColor(Color.parseColor(pokemon.getBackgroundColor()));
+
+        holder.txtStat1.setText(pokemon.getTypes().get(0).getNameType());
+        if(pokemon.getTypes().size()>1){
+            holder.txtStat2.setText(pokemon.getTypes().get(1).getNameType());
+        }else{
+            holder.txtStat2.setVisibility(View.INVISIBLE);
+        }
           Picasso.get().load(pokemon.getUrlImage()).into(holder.imgPokemon);
 
     }
@@ -56,7 +75,7 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView txtIdPokemon,txtNamePokemon;
+        TextView txtIdPokemon,txtNamePokemon,txtStat1,txtStat2;
         ImageView imgPokemon;
         CardView cardPokemon;
 
@@ -64,6 +83,8 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
             super(view);
             txtIdPokemon = view.findViewById(R.id.txtIdPokemon);
             txtNamePokemon = view.findViewById(R.id.txtNamePokemon);
+            txtStat1 = view.findViewById(R.id.txtStat1);
+            txtStat2 = view.findViewById(R.id.txtStat2);
             imgPokemon = view.findViewById(R.id.imgPokemon);
             cardPokemon = view.findViewById(R.id.cardPokemon);
         }

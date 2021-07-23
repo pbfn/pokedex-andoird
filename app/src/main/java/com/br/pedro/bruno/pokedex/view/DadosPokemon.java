@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -48,10 +49,13 @@ public class DadosPokemon extends AppCompatActivity {
         txtNomePokemon.setText(pokemon.getName());
 
         txtStat1Pokemon.setText(pokemon.getTypes().get(0).getNameType());
+
         if(pokemon.getTypes().size()>1){
             txtStat2Pokemon.setText(pokemon.getTypes().get(1).getNameType());
         }else{
-            txtStat2Pokemon.setText("");
+            txtStat2Pokemon.setVisibility(View.GONE);
+            txtStat1Pokemon.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
+            txtStat1Pokemon.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
 
         View view = this.getWindow().getDecorView();

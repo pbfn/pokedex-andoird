@@ -8,11 +8,11 @@ android {
 
     defaultConfig {
         applicationId "com.br.pedro.bruno.pokedex"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        android.defaultConfig.vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
