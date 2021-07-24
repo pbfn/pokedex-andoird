@@ -27,6 +27,7 @@ public class PokemonController extends AppDataBase implements ICrud<Pokemon>{
         dadoDoObjeto.put(PokemonDataModel.IDPOKEMON,obj.getId());
         dadoDoObjeto.put(PokemonDataModel.NAMEPOKEMON,obj.getName());
         dadoDoObjeto.put(PokemonDataModel.URLIMAGEPOKEMON,obj.getUrlImage());
+        dadoDoObjeto.put(PokemonDataModel.ISFAVORITE,obj.getIsFavorite());
         dadoDoObjeto.put(PokemonDataModel.BACKGROUNDCOLOR,obj.getBackgroundColor());
 
         //Enviar dados para a classe AppDataBase
@@ -42,6 +43,7 @@ public class PokemonController extends AppDataBase implements ICrud<Pokemon>{
         dadoDoObjeto.put(PokemonDataModel.IDPOKEMON,obj.getId());
         dadoDoObjeto.put(PokemonDataModel.NAMEPOKEMON,obj.getName());
         dadoDoObjeto.put(PokemonDataModel.URLIMAGEPOKEMON,obj.getUrlImage());
+        dadoDoObjeto.put(PokemonDataModel.ISFAVORITE,obj.getIsFavorite());
         dadoDoObjeto.put(PokemonDataModel.BACKGROUNDCOLOR,obj.getBackgroundColor());
 
         //Enviar dados para a classe AppDataBase

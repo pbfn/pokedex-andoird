@@ -100,6 +100,7 @@ public class PokemonUtil {
 
             pokemon.setStats(statArrayList);
             pokemon.setUrlImage("https:pokeres.bastionbot.org/images/pokemon/"+id+".png");
+            pokemon.setFavorite(0); // 0 = não favorito //1 = favorito
 
         }catch (JSONException e) {
             e.printStackTrace();

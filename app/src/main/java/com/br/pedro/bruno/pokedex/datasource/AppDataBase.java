@@ -18,6 +18,7 @@ import com.br.pedro.bruno.pokedex.model.StatPokemon;
 import com.br.pedro.bruno.pokedex.model.Type;
 import com.br.pedro.bruno.pokedex.model.TypePokemon;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,11 +91,10 @@ public class AppDataBase extends SQLiteOpenHelper {
         //regra de negócio
 
         try{
-
             retorno =  db.update(tabela,
                     dados,
-                    "id=?",
-                    new String[] {String.valueOf(dados.get("id"))})>0;
+                    "idPokemon=?",
+                    new String[] {String.valueOf(dados.get("idPokemon"))})>0;
 
             return retorno;
         }catch (Exception e){
@@ -125,6 +125,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                 pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
                 pokemon.setName(cursor.getString(cursor.getColumnIndex(PokemonDataModel.NAMEPOKEMON)));
                 pokemon.setUrlImage(cursor.getString(cursor.getColumnIndex(PokemonDataModel.URLIMAGEPOKEMON)));
+                pokemon.setFavorite(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.ISFAVORITE)));
                 pokemon.setBackgroundColor(cursor.getString(cursor.getColumnIndex(PokemonDataModel.BACKGROUNDCOLOR)));
 
                 //types do pokemon
@@ -169,6 +170,7 @@ public class AppDataBase extends SQLiteOpenHelper {
                 pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
                 pokemon.setName(cursor.getString(cursor.getColumnIndex(PokemonDataModel.NAMEPOKEMON)));
                 pokemon.setUrlImage(cursor.getString(cursor.getColumnIndex(PokemonDataModel.URLIMAGEPOKEMON)));
+                pokemon.setFavorite(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.ISFAVORITE)));
                 pokemon.setBackgroundColor(cursor.getString(cursor.getColumnIndex(PokemonDataModel.BACKGROUNDCOLOR)));
             }while (cursor.moveToNext());
         }
@@ -296,6 +298,7 @@ public class AppDataBase extends SQLiteOpenHelper {
         }
         return statPokemons;
     }
+
 
     //TYPE
     public List<Type> getAllTypes(String tabela){

@@ -11,6 +11,7 @@ public class Pokemon implements Serializable {
     private ArrayList<Stat> stats;
     private ArrayList<Type> types;
     private String backgroundColor;
+    private int isFavorite;
 
     public int getId() {
         return idPokemon;
@@ -58,5 +59,13 @@ public class Pokemon implements Serializable {
 
     public void setBackgroundColor(String backgroudColor) {
         this.backgroundColor = backgroudColor;
+    }
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(int favorite) {
+        isFavorite = favorite;
     }
 }

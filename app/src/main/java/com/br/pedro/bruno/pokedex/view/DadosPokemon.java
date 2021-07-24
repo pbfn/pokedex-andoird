@@ -1,10 +1,12 @@
 package com.br.pedro.bruno.pokedex.view;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.br.pedro.bruno.pokedex.R;
+import com.br.pedro.bruno.pokedex.controller.PokemonController;
 import com.br.pedro.bruno.pokedex.controller.StatPokemonController;
 import com.br.pedro.bruno.pokedex.model.Pokemon;
 import com.br.pedro.bruno.pokedex.model.StatPokemon;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ import java.util.ArrayList;
 
 public class DadosPokemon extends AppCompatActivity {
 
-    ImageView imgPokemonDados;
+    ImageView imgPokemonDados,imgFavPoke;
     TextView txtNomePokemon,txtStat1Pokemon,txtStat2Pokemon;
     TextView txtStat1,txtStat2,txtStat3,txtStat4,txtStat5,txtStat6;
     TextView txtVlStat1,txtVlStat2,txtVlStat3,txtVlStat4,txtVlStat5,txtVlStat6;
@@ -34,13 +37,21 @@ public class DadosPokemon extends AppCompatActivity {
     ProgressBar progressBarStat1,progressBarStat2,progressBarStat3,progressBarStat4,progressBarStat5,progressBarStat6;
 
     StatPokemonController statPokemonController;
+    PokemonController pokemonController;
     ArrayList<StatPokemon> statPokemonArrayList = new ArrayList<>();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dados_pokemon);
         initComponents();
         setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setHomeButtonEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);
 
         Pokemon pokemon  = (Pokemon) getIntent().getSerializableExtra("pokemonSelecionado");
         toolbar.setTitle(pokemon.getName());
@@ -79,6 +90,30 @@ public class DadosPokemon extends AppCompatActivity {
         txtVlStat4.setText(Integer.toString(statPokemonArrayList.get(3).getBaseStat()));
         txtVlStat5.setText(Integer.toString(statPokemonArrayList.get(4).getBaseStat()));
         txtVlStat6.setText(Integer.toString(statPokemonArrayList.get(5).getBaseStat()));
+
+
+        imgFavPoke.setClickable(true);
+        imgFavPoke.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pokemon.getIsFavorite() == 0){
+                    imgFavPoke.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    pokemon.setFavorite(1);
+                    pokemonController.alterar(pokemon);
+
+                }else{
+                    imgFavPoke.setImageResource(R.drawable.ic_outline_favorite_border_24);
+                    pokemon.setFavorite(0);
+                    pokemonController.alterar(pokemon);
+                }
+            }
+        });
+
+        if(pokemon.getIsFavorite() == 0){
+            imgFavPoke.setImageResource(R.drawable.ic_outline_favorite_border_24);
+        }else{
+            imgFavPoke.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
 
 
         progressBarStat1.setProgress(statPokemonArrayList.get(0).getBaseStat());
@@ -139,10 +174,12 @@ public class DadosPokemon extends AppCompatActivity {
 
     public void initComponents(){
         statPokemonController = new StatPokemonController(getApplicationContext());
+        pokemonController = new PokemonController(getApplicationContext());
 
         toolbar = findViewById(R.id.toolbar);
 
         imgPokemonDados = findViewById(R.id.imgPokemonDados);
+        imgFavPoke = findViewById(R.id.imgFavPoke);
 
         txtNomePokemon = findViewById(R.id.txtNomePokemon);
         txtStat1Pokemon = findViewById(R.id.txtStat1Pokemon);

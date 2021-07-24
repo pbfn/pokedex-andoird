@@ -23,17 +23,21 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     PokemonController pokemonController;
-   private RecyclerView recyclerPokemon;
+    private RecyclerView recyclerPokemon;
+    AdapterPokemon adapterPokemon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setRecyclerPokemon();
+    }
 
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //botao de voltar esta muito lento.
+        adapterPokemon.notifyDataSetChanged();
     }
 
     public void setRecyclerPokemon(){
@@ -48,8 +52,14 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerPokemon.setLayoutManager(layoutManager);
 
-        //recyclerPokemon.setHasFixedSize(true);
-        AdapterPokemon adapterPokemon = new AdapterPokemon(listPokemons);
+        recyclerPokemon.setHasFixedSize(true);
+        recyclerPokemon.setItemViewCacheSize(10);
+        recyclerPokemon.setDrawingCacheEnabled(true);
+
+
+        adapterPokemon = new AdapterPokemon(listPokemons);
+
+
         recyclerPokemon.setAdapter(adapterPokemon);
 
         recyclerPokemon.addOnItemTouchListener(new RecyclerClickListener(

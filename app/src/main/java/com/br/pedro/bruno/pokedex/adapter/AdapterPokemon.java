@@ -38,6 +38,7 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
         return new MyViewHolder(pokemonLista);
     }
 
+
     @Override
     public void onBindViewHolder(AdapterPokemon.MyViewHolder holder, int position) {
           Pokemon pokemon = listaPokemons.get(position);
@@ -62,8 +63,13 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
         }else{
             holder.txtStat2.setVisibility(View.INVISIBLE);
         }
-          Picasso.get().load(pokemon.getUrlImage()).into(holder.imgPokemon);
+        Picasso.get().load(pokemon.getUrlImage()).into(holder.imgPokemon);
 
+        if(pokemon.getIsFavorite() == 0){
+            holder.imgFavorite.setImageResource(R.drawable.ic_outline_favorite_border_24);
+        }else{
+            holder.imgFavorite.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
     }
 
 
@@ -76,7 +82,7 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtIdPokemon,txtNamePokemon,txtStat1,txtStat2;
-        ImageView imgPokemon;
+        ImageView imgPokemon,imgFavorite;
         CardView cardPokemon;
 
         public MyViewHolder(View view) {
@@ -86,8 +92,10 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
             txtStat1 = view.findViewById(R.id.txtStat1);
             txtStat2 = view.findViewById(R.id.txtStat2);
             imgPokemon = view.findViewById(R.id.imgPokemon);
+            imgFavorite= view.findViewById(R.id.imgFavorite);
             cardPokemon = view.findViewById(R.id.cardPokemon);
         }
+
     }
 
 }
