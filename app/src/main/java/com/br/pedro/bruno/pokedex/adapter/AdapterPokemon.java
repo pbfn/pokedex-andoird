@@ -3,6 +3,7 @@ package com.br.pedro.bruno.pokedex.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.br.pedro.bruno.pokedex.R;
 import com.br.pedro.bruno.pokedex.model.Pokemon;
 import com.br.pedro.bruno.pokedex.model.Type;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,14 +28,16 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
 
 
     ArrayList<Pokemon> listaPokemons;
+    ArrayList<Pokemon> visiblePokemons;
 
     public AdapterPokemon(ArrayList<Pokemon> pokemons){
+        this.visiblePokemons = pokemons;
         this.listaPokemons = pokemons;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+        Fresco.initialize(parent.getContext());
         View pokemonLista = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_pokemon,parent,false);
         return new MyViewHolder(pokemonLista);
@@ -41,7 +46,7 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
 
     @Override
     public void onBindViewHolder(AdapterPokemon.MyViewHolder holder, int position) {
-          Pokemon pokemon = listaPokemons.get(position);
+        Pokemon pokemon = visiblePokemons.get(position);
           String codigo = Integer.toString(pokemon.getId());
           switch (codigo.length()) {
               case 1:
@@ -63,7 +68,9 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
         }else{
             holder.txtStat2.setVisibility(View.INVISIBLE);
         }
-        Picasso.get().load(pokemon.getUrlImage()).into(holder.imgPokemon);
+        Uri uri = Uri.parse(pokemon.getUrlImage());
+        holder.imgPokemon.setImageURI(uri);
+
 
         if(pokemon.getIsFavorite() == 0){
             holder.imgFavorite.setImageResource(R.drawable.ic_outline_favorite_border_24);
@@ -76,13 +83,52 @@ public class AdapterPokemon extends RecyclerView.Adapter<AdapterPokemon.MyViewHo
 
     @Override
     public int getItemCount() {
-        return listaPokemons.size();
+        return visiblePokemons.size();
+    }
+
+    public Pokemon getPokemon(int position){
+        Pokemon pokemon = visiblePokemons.get(position);
+        return pokemon;
+    }
+
+
+    public void setFilterName(String queryText,int favorite) {
+        visiblePokemons = new ArrayList<>();
+        for (int i = 0; i <listaPokemons.size() ; i++) {
+            String name = listaPokemons.get(i).getName();
+            int isFavorite = listaPokemons.get(i).getIsFavorite();
+            if(favorite == 1){
+                if(name.toLowerCase().contains(queryText) && isFavorite == favorite){
+                    visiblePokemons.add(listaPokemons.get(i));
+                }
+            }else{
+                if(name.toLowerCase().contains(queryText)){
+                    visiblePokemons.add(listaPokemons.get(i));
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setFilterFavorite(int favorite) {
+        if(favorite == 0){
+            visiblePokemons = listaPokemons;
+        }else {
+            visiblePokemons = new ArrayList<>();
+            for (int i = 0; i <listaPokemons.size() ; i++) {
+                int isFavorite = listaPokemons.get(i).getIsFavorite();
+                if(isFavorite == 1){
+                    visiblePokemons.add(listaPokemons.get(i));
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-
         TextView txtIdPokemon,txtNamePokemon,txtStat1,txtStat2;
-        ImageView imgPokemon,imgFavorite;
+        ImageView imgFavorite;
+        SimpleDraweeView imgPokemon;
         CardView cardPokemon;
 
         public MyViewHolder(View view) {

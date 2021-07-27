@@ -43,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imgPokemon"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -51,7 +51,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imgFavorite"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/pokebola" />
+            />
 
         <ImageView
             android:id="@+id/imgFavorite"

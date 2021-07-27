@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imgPokemonDados"
             android:layout_width="260dp"
             android:layout_height="260dp"
@@ -24,7 +24,7 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:srcCompat="@tools:sample/avatars" />
+            />
 
         <TextView
             android:id="@+id/txtNomePokemon"
@@ -105,6 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="28dp"
+            android:clickable="true"
             app:layout_constraintEnd_toEndOf="@+id/toolbar"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_outline_favorite_border_24" />

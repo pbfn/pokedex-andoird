@@ -10,10 +10,15 @@ import com.br.pedro.bruno.pokedex.controller.PokemonController;
 import com.br.pedro.bruno.pokedex.controller.StatPokemonController;
 import com.br.pedro.bruno.pokedex.model.Pokemon;
 import com.br.pedro.bruno.pokedex.model.StatPokemon;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.squareup.picasso.Picasso;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -23,12 +28,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class DadosPokemon extends AppCompatActivity {
-
-    ImageView imgPokemonDados,imgFavPoke;
+    SimpleDraweeView imgPokemonDados;
+    ImageView imgFavPoke;
     TextView txtNomePokemon,txtStat1Pokemon,txtStat2Pokemon;
     TextView txtStat1,txtStat2,txtStat3,txtStat4,txtStat5,txtStat6;
     TextView txtVlStat1,txtVlStat2,txtVlStat3,txtVlStat4,txtVlStat5,txtVlStat6;
@@ -45,6 +53,7 @@ public class DadosPokemon extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_dados_pokemon);
         initComponents();
         setSupportActionBar(toolbar);
@@ -56,7 +65,10 @@ public class DadosPokemon extends AppCompatActivity {
         Pokemon pokemon  = (Pokemon) getIntent().getSerializableExtra("pokemonSelecionado");
         toolbar.setTitle(pokemon.getName());
 
-        Picasso.get().load(pokemon.getUrlImage()).into(imgPokemonDados);
+        //Picasso.get().load(pokemon.getUrlImage()).into(imgPokemonDados);
+
+        Uri uri = Uri.parse(pokemon.getUrlImage());
+        imgPokemonDados.setImageURI(uri);
         txtNomePokemon.setText(pokemon.getName());
 
         txtStat1Pokemon.setText(pokemon.getTypes().get(0).getNameType());
@@ -215,6 +227,8 @@ public class DadosPokemon extends AppCompatActivity {
 
     }
 
+    public void getImage(String imageUrl) {
 
+    }
 
 }

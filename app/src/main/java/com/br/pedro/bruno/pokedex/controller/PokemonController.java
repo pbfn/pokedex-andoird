@@ -61,6 +61,10 @@ public class PokemonController extends AppDataBase implements ICrud<Pokemon>{
         return getAllPokemons(PokemonDataModel.TABELA);
     }
 
+    public List<Pokemon> listarFavoritos() {
+        return getFavoritesPokemons(PokemonDataModel.TABELA);
+    }
+
     public Pokemon getById(int id){
         return getPokemonById(PokemonDataModel.TABELA,id);
     }

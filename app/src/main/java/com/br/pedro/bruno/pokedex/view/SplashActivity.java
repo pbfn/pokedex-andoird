@@ -61,6 +61,7 @@ public class SplashActivity extends AppCompatActivity {
     private void exibirProgess(boolean exibir){
         progressBarSplash.setVisibility(exibir? View.VISIBLE: View.GONE);
     }
+
     public class RequestApis extends AsyncTask<Void,Void,Boolean> {
 
         @Override
@@ -90,7 +91,7 @@ public class SplashActivity extends AppCompatActivity {
 //            txtSubtitle.setText("Buscando os Pokemons");
             if(pokemonList.size()==0){
                 PokemonUtil pokemonUtil = new PokemonUtil();
-                for (int i = 1; i < 110; i++) {
+                for (int i = 1; i <= 200; i++) {
                     pokemonUtil.getPokemon("https://pokeapi.co/api/v2/pokemon/"+i,getApplicationContext());
                 }
             }

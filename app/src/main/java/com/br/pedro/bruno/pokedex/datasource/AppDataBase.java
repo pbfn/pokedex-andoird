@@ -197,6 +197,57 @@ public class AppDataBase extends SQLiteOpenHelper {
         return pokemon;
     }
 
+    public  List<Pokemon> getFavoritesPokemons(String tabela){
+        db = getWritableDatabase();
+        Pokemon pokemon;
+
+        List<Pokemon> pokemons = new ArrayList<>();
+        ArrayList<TypePokemon> typesPoke;
+        ArrayList<StatPokemon> statsPoke;
+        String sql = "SELECT * FROM "+tabela+" WHERE isFavorite = 1";
+        Cursor cursor;
+
+        cursor = db.rawQuery(sql,null);
+
+        if(cursor.moveToFirst()){
+
+            do {
+
+                pokemon = new Pokemon();
+                pokemon.setId(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.IDPOKEMON)));
+                pokemon.setName(cursor.getString(cursor.getColumnIndex(PokemonDataModel.NAMEPOKEMON)));
+                pokemon.setUrlImage(cursor.getString(cursor.getColumnIndex(PokemonDataModel.URLIMAGEPOKEMON)));
+                pokemon.setFavorite(cursor.getInt(cursor.getColumnIndex(PokemonDataModel.ISFAVORITE)));
+                pokemon.setBackgroundColor(cursor.getString(cursor.getColumnIndex(PokemonDataModel.BACKGROUNDCOLOR)));
+
+                //types do pokemon
+                typesPoke = (ArrayList<TypePokemon>) getTypePokemonById("tbTypePokemon",pokemon.getId());
+                ArrayList<Type> types = new ArrayList<>();
+                Type type;
+                for (int i = 0; i < typesPoke.size(); i++) {
+                    type = getTypeById(typesPoke.get(i).getIdType());
+                    types.add(type);
+                }
+                pokemon.setTypes(types);
+
+                //stats do pokemon
+                statsPoke = (ArrayList<StatPokemon>) getStatsPokemonById("tbStatPokemon",pokemon.getId());
+                ArrayList<Stat> stats = new ArrayList<>();
+                Stat stat;
+                for (int i = 0; i <statsPoke.size() ; i++) {
+                    stat = getStatById(statsPoke.get(i).getIdStat());
+                    stats.add(stat);
+                }
+                pokemon.setStats(stats);
+
+                pokemons.add(pokemon);
+
+            }while (cursor.moveToNext());
+
+        }
+        return pokemons;
+    }
+
     //TYPES DO POKEMON
     public List<TypePokemon> getAllTypesPokemon(String tabela){
         db = getWritableDatabase();
